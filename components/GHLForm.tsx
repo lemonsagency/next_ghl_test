@@ -18,6 +18,7 @@ export default function GHLForm() {
     const data = Object.fromEntries(formData)
 
     try {
+      console.log('Submitting form data:', data)
       const response = await fetch('/api/submit-to-ghl', {
         method: 'POST',
         headers: {
@@ -26,6 +27,9 @@ export default function GHLForm() {
         body: JSON.stringify(data),
       })
 
+      const result = await response.json()
+      console.log('API response:', result)
+
       if (response.ok) {
         toast({
           title: "Success",
@@ -33,13 +37,13 @@ export default function GHLForm() {
         })
         event.currentTarget.reset()
       } else {
-        throw new Error('Form submission failed')
+        throw new Error(result.error || 'Form submission failed')
       }
     } catch (error) {
       console.error('Form submission error:', error)
       toast({
         title: "Error",
-        description: "There was a problem submitting your form. Please try again.",
+        description: error instanceof Error ? error.message : "There was a problem submitting your form. Please try again.",
       })
     } finally {
       setIsSubmitting(false)
