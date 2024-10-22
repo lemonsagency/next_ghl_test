@@ -44,6 +44,9 @@ export async function POST(request: Request) {
     return NextResponse.json(data)
   } catch (error) {
     console.error('Error in API route:', error)
-    return NextResponse.json({ error: 'Internal server error', details: error.message }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Internal server error', 
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
   }
 }
