@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const body = await request.json()
-
   const ghlApiKey = process.env.GHL_API_KEY
   const ghlLocationId = process.env.GHL_LOCATION_ID
 
@@ -11,7 +10,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await fetch(`https://rest.gohighlevel.com/v1/contacts/`, {
+    const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,10 +20,6 @@ export async function POST(request: Request) {
         locationId: ghlLocationId,
         name: body.name,
         email: body.email,
-        phone: body.phone,
-        customField: {
-          message: body.message,
-        },
       }),
     })
 
