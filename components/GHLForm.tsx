@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast"
 export default function GHLForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
+  const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -35,7 +37,7 @@ export default function GHLForm() {
           title: "Success",
           description: "Your form has been submitted successfully!",
         })
-        event.currentTarget.reset()
+        router.push('/thank-you')
       } else {
         throw new Error(result.error || 'Form submission failed')
       }
